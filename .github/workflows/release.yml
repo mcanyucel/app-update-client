@@ -1,0 +1,55 @@
+# Tests every push and pull request. A version tag (v1.2.3, matching <Version> in Directory.Build.props) also packs
+# both packages and publishes them to nuget.org through Trusted Publishing: nuget.org trusts this workflow file in
+# this repository (a policy on the nuget.org account), so no API key is stored anywhere.
+name: release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet test --project tests/Bridgewiz.AppUpdate.Tests
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write       # lets the job ask GitHub for the token that nuget.org exchanges for a temporary key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Check the tag against the version
+        run: |
+          version=$(dotnet msbuild src/Bridgewiz.AppUpdate -getProperty:Version)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::The tag is $GITHUB_REF_NAME but Directory.Build.props says $version."
+            exit 1
+          fi
+
+      - name: Pack
+        run: dotnet pack app-update-client.slnx -c Release -o artifacts -p:ContinuousIntegrationBuild=true
+
+      # The temporary key lasts an hour, so it is asked for just before the push.
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}     # the nuget.org profile name (not the e-mail address)
+
+      # The .snupkg symbol packages next to them are pushed too.
+      - name: Push
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate

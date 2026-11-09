@@ -69,11 +69,24 @@ version higher than the running one is an update, so a rollback on the server ne
 
 ```
 dotnet test --project tests/Bridgewiz.AppUpdate.Tests
-.\pack.ps1                                   # artifacts\*.nupkg and *.snupkg
-dotnet nuget push artifacts\*.nupkg --source https://api.nuget.org/v3/index.json --api-key <nuget.org key>
+.\pack.ps1                                   # a local build of both packages into artifacts\
 ```
 
-Raise `<Version>` in `Directory.Build.props` first; both packages share it.
+To release: raise `<Version>` in `Directory.Build.props` (both packages share it), commit, and push a tag with that
+version:
+
+```
+git tag v1.0.1
+git push origin v1.0.1
+```
+
+The `release` workflow then tests, packs and publishes both packages to nuget.org with
+[Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing): no API key is kept anywhere.
+It needs, once:
+
+- on nuget.org, a Trusted Publishing policy: owner `mcanyucel`, repository `app-update-client`, workflow file
+  `release.yml`;
+- in this repository, the secret `NUGET_USER`: the nuget.org profile name.
 
 ## License
 

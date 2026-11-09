@@ -3,9 +3,10 @@
     Tests and packs both packages into artifacts\: Bridgewiz.AppUpdate and Bridgewiz.AppUpdate.Avalonia (.nupkg, plus
     .snupkg symbols). The version comes from Directory.Build.props.
 
+    Releases are published by the release workflow (push a v* tag); this is for a local build.
+
 .EXAMPLE
     .\pack.ps1
-    dotnet nuget push artifacts\*.nupkg --source https://api.nuget.org/v3/index.json --api-key <key>
 #>
 param([switch] $AllowDirty)
 
