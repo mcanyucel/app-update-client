@@ -1,0 +1,27 @@
+<Project>
+    <!-- One version for both packages: raise it here before pack.ps1. -->
+    <PropertyGroup>
+        <Version>1.0.0</Version>
+        <Authors>Mustafa Can Yücel</Authors>
+        <Copyright>© 2026 Mustafa Can Yücel</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/mcanyucel/app-update-client</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mcanyucel/app-update-client</RepositoryUrl>
+        <PackageTags>update;auto-update;updater;installer;inno-setup;app-update-server</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <!-- Symbols go to nuget.org's symbol server; the source is linked to the GitHub commit. -->
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(IsPackable)' != 'false'">
+        <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" Visible="false" />
+    </ItemGroup>
+</Project>

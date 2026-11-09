@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- The update dialog and the check-at-startup / check-now flows for Avalonia apps. -->
+    <PropertyGroup>
+        <PackageId>Bridgewiz.AppUpdate.Avalonia</PackageId>
+        <Description>Update dialog and check flows for Avalonia desktop apps using Bridgewiz.AppUpdate: a quiet check at startup, Help > Check for updates, release notes, download progress, skip this version, and a silent install that reopens the app.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.1.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Bridgewiz.AppUpdate\Bridgewiz.AppUpdate.csproj" />
+    </ItemGroup>
+
+</Project>

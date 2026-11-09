@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- The client without UI: check, download and verify, run the installer. -->
+    <PropertyGroup>
+        <PackageId>Bridgewiz.AppUpdate</PackageId>
+        <Description>Client for app-update-server (github.com/mcanyucel/app-update-server): checks for a newer version, downloads its installer, verifies its SHA-256 and runs it silently. No UI; see Bridgewiz.AppUpdate.Avalonia for the dialog.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Bridgewiz.AppUpdate.Tests" />
+    </ItemGroup>
+
+</Project>

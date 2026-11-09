@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/Bridgewiz.AppUpdate/Bridgewiz.AppUpdate.csproj" />
+  <Project Path="src/Bridgewiz.AppUpdate.Avalonia/Bridgewiz.AppUpdate.Avalonia.csproj" />
+  <Project Path="tests/Bridgewiz.AppUpdate.Tests/Bridgewiz.AppUpdate.Tests.csproj" />
+</Solution>

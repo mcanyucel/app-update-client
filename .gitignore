@@ -1,0 +1,10 @@
+bin/
+obj/
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+*.DotSettings.user
+TestResults/
+
+# Packages built by pack.ps1
+artifacts/
