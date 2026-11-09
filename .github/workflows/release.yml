@@ -48,7 +48,7 @@ jobs:
         uses: NuGet/login@v1
         id: login
         with:
-          user: ${{ secrets.NUGET_USER }}     # the nuget.org profile name (not the e-mail address)
+          user: tpalhawk     # the nuget.org profile that owns the packages (public: it shows on every package page)
 
       # The .snupkg symbol packages next to them are pushed too.
       - name: Push

@@ -82,11 +82,10 @@ git push origin v1.0.1
 
 The `release` workflow then tests, packs and publishes both packages to nuget.org with
 [Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing): no API key is kept anywhere.
-It needs, once:
+It needs, once (done):
 
-- on nuget.org, a Trusted Publishing policy: owner `mcanyucel`, repository `app-update-client`, workflow file
-  `release.yml`;
-- in this repository, the secret `NUGET_USER`: the nuget.org profile name.
+- on nuget.org (profile `tpalhawk`, which owns the packages), a Trusted Publishing policy: repository owner
+  `mcanyucel`, repository `app-update-client`, workflow file `release.yml`.
 
 ## License
 
